@@ -19,11 +19,7 @@
   <div class="container">
     <?php
     // MySQLに接続する
-    try {
-      $db = new PDO('mysql:dbname=practice;host=127.0.0.1;charset=utf8','root','root');
-    } catch(PDOException $e) {
-      echo 'DB接続エラー：' . $e->getMessage();
-    }
+    require('dbconnection.php');
 
     // 一覧表を作る
     $items = $db->query("select * from items order by id");
@@ -37,6 +33,8 @@
           <th>価格</th>
           <th>備考</th>
           <th>登録日</th>
+          <th>更新日</th>
+          <th>更新</th>
         </tr>
       </thread>
       <tbody>
@@ -48,6 +46,8 @@
             <td><?php print($item['price']); ?></td>
             <td><?php print($item['remarks']); ?></td>
             <td><?php print($item['created_at']); ?></td>
+            <td><?php print($item['updated_at']); ?></td>
+            <td><a href="update.php?id=<?php print($item['id']); ?>" role="button" class="btn btn-success">編集</a></td>
           </tr>
         <?php endwhile; ?>
       </tbody>

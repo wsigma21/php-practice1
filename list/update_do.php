@@ -21,26 +21,27 @@
       <?php
       // MySQLに接続する
       require('dbconnection.php');
-        
+
       // 値段が半角数字かどうかチェック
       $price = $_POST['price'];
       $price = mb_convert_kana($price, 'n', 'UTF-8');
       if (!is_numeric($price)) {
         echo '<p>価格は数字を入力してください</p>';
-        echo '<a href="input.html">新規登録へ戻る</a>';
+        echo '<a href="list.php">一覧へ戻る</a>';
         exit();
       }
-      //bindしてINSERT
-      $statement = $db->prepare('INSERT INTO items SET item_name=?, item_type=?, price=?, remarks=?, created_at=NOW(), updated_at=NOW()');
+
+      //bindしてUPDATE
+      $statement = $db->prepare("UPDATE items SET item_name=?, item_type=?, price=?, remarks=?, updated_at=NOW() where id=?");
       $statement->bindParam(1, $_POST['item_name']);
       $statement->bindParam(2, $_POST['item_type']);
       $statement->bindParam(3, $price);
       $statement->bindParam(4, $_POST['remarks']);
+      $statement->bindParam(5, $_POST['id']);
       $statement->execute();
-
-      echo '<p>商品が登録されました</p>';
+      echo '<p>商品情報を更新しました</p>';
       ?>
-    <a href="list.php">商品一覧表へ</a>
+      <a href="list.php">商品一覧表へ</a>
     </div>
   </pre>
 </main>
