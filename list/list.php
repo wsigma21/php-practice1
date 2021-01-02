@@ -24,6 +24,7 @@
     // 一覧表を作る
     $items = $db->query("select * from items order by id");
     ?>
+    
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -35,6 +36,7 @@
           <th>登録日</th>
           <th>更新日</th>
           <th>更新</th>
+          <th>削除</th>
         </tr>
       </thread>
       <tbody>
@@ -48,10 +50,13 @@
             <td><?php print($item['created_at']); ?></td>
             <td><?php print($item['updated_at']); ?></td>
             <td><a href="update.php?id=<?php print($item['id']); ?>" role="button" class="btn btn-success">編集</a></td>
+            <td><a href="delete.php?id=<?php print($item['id']); ?>" role="button" class="btn btn-danger">削除</a></td>
           </tr>
         <?php endwhile; ?>
       </tbody>
     </table>
+
+
     <a href="input.html">新規登録へ</a>
   </div>
 </main>
